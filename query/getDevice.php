@@ -21,7 +21,7 @@ $num = $stmt->rowCount();
 
 if($num>0){
  
-    $devices=array();
+   /* $devices=array();
     $devices["records"]=array();
  
    
@@ -29,19 +29,25 @@ if($num>0){
 
         extract($row);
         $device_item=array(
-            "id" => $id,
-            "name" => $name,
-            "os_id" => $os_id,
-            "brand_id" => $brand_id,
-            "fotolink" => $fotolink,
-            "year" => $year,
-            "price" => $price
+            "d.id" => $id,
+            "d.name" => $name,
+            "d.os_id" => $os_id,
+            "d.rand_id" => $brand_id,
+            "d.fotolink" => $fotolink,
+            "d.year" => $year,
+            "d.price" => $price
         );
  
         array_push($devices["records"], $device_item);
     }
- 
-    echo json_encode($device_arr);
+ */
+    //echo json_encode($device_arr);
+    while($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $post[] =  $result;
+    }
+
+    echo json_encode($post,JSON_UNESCAPED_UNICODE);
+
 }
  
 else{

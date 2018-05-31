@@ -1,19 +1,6 @@
 <?php
 class Device{
  
-/*CREATE TABLE IF NOT EXISTS `device` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `os_id` int(11) NOT NULL,
-  `brand_id` int(11) NOT NULL,
-  `fotolink` varchar(256) NOT NULL,
-  `year` datetime NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`id`)
-) AUTO_INCREMENT=101 ;*/
-
     private $conn;
     private $table_name = "device";
  
@@ -33,27 +20,22 @@ class Device{
 
 
 
-function read(){
+function read() {
  
-    $query = "SELECT
-                c.name as category_name, p.id, p.name, p.os_id, p.brand_id, p.fotolink, p.year. p.price
-            FROM
-                " . $this->table_name . " p
-                LEFT JOIN
-                    brand b
-                        ON p.brand_id = c.id
-                LEFT JOIN
-                    operative system o
-                      ON p.os_id = o.id
-            ORDER BY
-                p.created DESC";
+    $query = "SELECT d.name, d.id, d.name, d.os_id, d.fotolink, d.year, d.price, b.name as brand
+              FROM device d
+              LEFT JOIN brand b ON d.brand_id = b.id
+              LEFT JOIN operative_system o ON d.os_id = o.id
+              ORDER BY brand ";
  
     // prepare query statement
     $stmt = $this->conn->prepare($query);
  
     // execute query
     $stmt->execute();
- 
+
+
+
     return $stmt;
 }
 
